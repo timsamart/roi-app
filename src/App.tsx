@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { ParametersForm } from './components/ParametersForm';
 import { InvestmentChart } from './components/InvestmentChart';
-import { GameTheoryAnalysis } from './components/GameTheoryAnalysis';
 import { ScenarioManager } from './components/ScenarioManager';
+import { FormulaTable } from './components/FormulaTable';
+import { GameTheoryInterface } from './components/GameTheoryInterface';
 import { calculateData } from './utils/calculations';
 import { Parameters } from './utils/dataModels';
 import { Layout, Typography } from 'antd';
@@ -55,14 +56,17 @@ const App: React.FC = () => {
           {/* Szenarienverwaltung */}
           <ScenarioManager parameters={parameters} setParameters={setParameters} />
 
+          {/* Formelübersichtstabelle */}
+          <FormulaTable setParameters={setParameters} />
+
           {/* Parameterformular */}
           <ParametersForm parameters={parameters} setParameters={setParameters} />
 
           {/* Investitionsdiagramm */}
           <InvestmentChart data={data} />
 
-          {/* Spieltheoretische Analyse */}
-          <GameTheoryAnalysis />
+          {/* Erweiterte Spieltheoretische Analyse */}
+          <GameTheoryInterface />
         </ErrorBoundary>
       </Content>
     </Layout>

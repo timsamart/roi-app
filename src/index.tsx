@@ -1,7 +1,7 @@
 // Datei: src/index.tsx
 
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // Importieren Sie 'react-dom/client'
+import ReactDOM from 'react-dom/client'; // Importieren von 'react-dom/client'
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
