@@ -1,28 +1,25 @@
-// Datei: src/components/GameTheoryAnalysis.tsx
+// Datei: src/components/GameTheoryInterface.tsx
 
 import React, { useState } from 'react';
-import { Table, Card, Input, Button, Form, message, InputNumber } from 'antd'; // Fügen Sie InputNumber hier hinzu
+import { Table, Card, Input, Button, Form, message, InputNumber } from 'antd';
 import { calculateNashEquilibrium, Strategy } from '../utils/gameTheory';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const { Column } = Table;
 
-// Komponente für die spieltheoretische Analyse
-export const GameTheoryAnalysis: React.FC = () => {
-  // Zustand für die Strategien
+// Komponente für das Spieltheorie-Interface
+export const GameTheoryInterface: React.FC = () => {
   const [strategies, setStrategies] = useState<Strategy[]>([
     { name: 'Strategie A', payoff: 100 },
     { name: 'Strategie B', payoff: 150 },
     { name: 'Strategie C', payoff: 120 },
   ]);
 
-  // Formularelemente für das Hinzufügen neuer Strategien
   const [form] = Form.useForm();
 
-  // Funktion zum Hinzufügen einer neuen Strategie
   const addStrategy = (values: any) => {
     const { name, payoff } = values;
     if (name && payoff !== undefined) {
-      // Überprüfen, ob der Strategiename bereits existiert
       const exists = strategies.some((s) => s.name.toLowerCase() === name.toLowerCase());
       if (exists) {
         message.error(`Eine Strategie mit dem Namen "${name}" existiert bereits.`);
@@ -36,23 +33,37 @@ export const GameTheoryAnalysis: React.FC = () => {
     }
   };
 
-  // Berechnung des Nash-Gleichgewichts
   const nashEquilibrium = calculateNashEquilibrium(strategies);
 
   return (
-    <Card title="Spieltheoretische Analyse" style={{ marginTop: '20px' }}>
-      {/* Tabelle der Strategien */}
+    <Card title="Spieltheorie-Interface" style={{ marginTop: '20px' }}>
       <Table dataSource={strategies} pagination={false} rowKey="name" size="small">
         <Column title="Strategie" dataIndex="name" key="name" />
         <Column title="Auszahlung" dataIndex="payoff" key="payoff" />
       </Table>
 
-      {/* Anzeige des Nash-Gleichgewichts */}
       {nashEquilibrium && (
         <p style={{ marginTop: '10px' }}>
           Das Nash-Gleichgewicht ist erreicht bei: <strong>{nashEquilibrium.name}</strong> mit einer Auszahlung von {nashEquilibrium.payoff}.
         </p>
       )}
+
+      {/* LineChart zur Visualisierung der Strategien */}
+      <LineChart
+        width={600}
+        height={300}
+        data={strategies}
+        margin={{
+          top: 20, right: 30, left: 20, bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="payoff" stroke="#8884d8" name="Auszahlung" />
+      </LineChart>
 
       {/* Formular zum Hinzufügen neuer Strategien */}
       <Form form={form} layout="inline" onFinish={addStrategy} style={{ marginTop: '20px' }}>

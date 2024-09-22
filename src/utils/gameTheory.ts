@@ -1,13 +1,14 @@
 // Datei: src/utils/gameTheory.ts
 
+// Interface für eine Strategie
 export interface Strategy {
-    name: string;
-    payoff: number;
+    name: string; // Name der Strategie
+    payoff: number; // Auszahlung der Strategie
   }
   
+  // Funktion zur Berechnung des Nash-Gleichgewichts (vereinfachte Version)
   export const calculateNashEquilibrium = (strategies: Strategy[]): Strategy | null => {
-    // Vereinfachtes Beispiel für die Berechnung des Nash-Gleichgewichts
-    // In der Praxis müssten komplexere Berechnungen durchgeführt werden
+    // Vereinfachte Berechnung: Strategie mit höchstem Payoff ist das Nash-Gleichgewicht
     let maxPayoff = -Infinity;
     let bestStrategy: Strategy | null = null;
   
